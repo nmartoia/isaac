@@ -10,9 +10,14 @@ let coeur =3
 let countc=document.querySelector('#coeur')
 let perdu=false
 let bombes=3
+let cle=0
+let countcle=document.querySelector('#cle')
+countcle.textContent=cle
 let countb=document.querySelector('#bombe')
 countc.textContent=coeur
 countb.textContent=bombes
+let tear = document.createElement('img')
+tear.src='img/tear.png'
 perso.src='img/perso1.png'
 perso.alt='perso1'
 perso.className='perso1'
@@ -47,32 +52,16 @@ window.addEventListener('keydown',(e)=>{
         }
     }
     else if(e.code=='ArrowDown'){
-        if(axeY1<block.length-1&&block[axeY1+1].children[axeX1].firstChild==null&&block[axeY1+1].children[axeX1].classList.contains('vide')&&perdu==false){
-            block[axeY1].children[axeX1].removeChild(block[axeY1].children[axeX1].firstChild)
-            axeY1++
-            block[axeY1].children[axeX1].appendChild(perso2)
-        }    
+        Tire('down')
     }
     else if(e.code=='ArrowUp'){
-        if(axeY1>0&&block[axeY1-1].children[axeX1].firstChild==null&&block[axeY1-1].children[axeX1].classList.contains('vide')&&perdu==false){
-            block[axeY1].children[axeX1].removeChild(block[axeY1].children[axeX1].firstChild)
-            axeY1--
-            block[axeY1].children[axeX1].appendChild(perso2)
-        }
+        Tire('up')
     }   
     else if(e.code=='ArrowLeft'){
-        if(axeX1>0&&block[axeY1].children[axeX1-1].firstChild==null&&block[axeY1].children[axeX1-1].classList.contains('vide')&&perdu==false){
-            block[axeY1].children[axeX1].removeChild(block[axeY1].children[axeX1].firstChild)
-            axeX1--
-            block[axeY1].children[axeX1].appendChild(perso2)
-        }
+        Tire('left')
     }
     else if(e.code=='ArrowRight'){
-        if(axeX1<block[axeY1].children.length-1&&block[axeY1].children[axeX1+1].firstChild==null&&block[axeY1].children[axeX1+1].classList.contains('vide')&&perdu==false){
-            block[axeY1].children[axeX1].removeChild(block[axeY1].children[axeX1].firstChild)
-            axeX1++
-            block[axeY1].children[axeX1].appendChild(perso2)
-        }
+        Tire('rigth')
     }
     else if(e.code=='KeyE'||e.code=='Space'){
         bombe()
@@ -123,7 +112,7 @@ function bombe(){
 }
 function degat(){
         coeur-=0.5
-        span.textContent=coeur
+        countc.textContent=coeur
         if(coeur<=0){
             alert('vous avez perdu')
             perso.src='img/death.png'
@@ -134,3 +123,104 @@ function degat(){
 btn.addEventListener('click',()=>{
     location.reload()
 })
+function Tire(direction) {
+    let range=2
+    let countt=0
+    let axeTX=axeX
+    let axeTY=axeY
+    if(direction=='down'){
+        const interval = setInterval(function (){
+            if(countt<range){
+                if(axeTY<block.length-1&&block[axeTY+1].children[axeTX].firstChild==null&&block[axeTY+1].children[axeTX].classList.contains('vide')&&perdu==false){
+                    if(countt==0){
+                        block[axeTY+1].children[axeTX].appendChild(tear)
+                        axeTY++
+                        countt++
+                    }
+                    else{
+                        block[axeTY].children[axeTX].lastChild.remove()
+                        axeTY++
+                        block[axeTY].children[axeTX].appendChild(tear)
+                        countt++   
+                    }
+                     
+                }
+            }
+            else{
+                block[axeTY].children[axeTX].firstChild.remove()
+                clearInterval(interval)
+            }
+        },1000)
+    }
+    if(direction=='up'){
+        const interval = setInterval(function (){
+            if(countt<range){
+                if(axeTY>0&&block[axeTY-1].children[axeTX].firstChild==null&&block[axeTY-1].children[axeTX].classList.contains('vide')&&perdu==false){
+                    if(countt==0){
+                        block[axeTY-1].children[axeTX].appendChild(tear)
+                        axeTY--
+                        countt++
+                    }
+                    else{
+                        block[axeTY].children[axeTX].lastChild.remove()
+                        axeTY--
+                        block[axeTY].children[axeTX].appendChild(tear)
+                        countt++   
+                    }
+                }
+            }
+            else{
+                block[axeTY].children[axeTX].firstChild.remove()
+                clearInterval(interval)
+            }
+        },1000)
+    }
+    if(direction=='left'){
+        const interval = setInterval(function (){
+            if(countt<range){
+                if(axeTX>0&&block[axeTY].children[axeTX-1].firstChild==null&&block[axeTY].children[axeTX-1].classList.contains('vide')&&perdu==false){
+                    if(countt==0){
+                        block[axeTY].children[axeTX-1].appendChild(tear)
+                        axeTX--
+                        countt++
+                    }
+                    else{
+                        block[axeTY].children[axeTX].lastChild.remove()
+                        axeTX--
+                        block[axeTY].children[axeTX].appendChild(tear)
+                        countt++   
+                    }
+                     
+                }
+            }
+            else{
+                block[axeTY].children[axeTX].firstChild.remove()
+                clearInterval(interval)
+            }
+        },1000)
+    }
+    if(direction=='rigth'){
+        const interval = setInterval(function (){
+            if(countt<range){
+                if(axeTX>0&&block[axeTY].children[axeTX+1].firstChild==null&&block[axeTY].children[axeTX+1].classList.contains('vide')&&perdu==false){
+                    if(countt==0){
+                        block[axeTY].children[axeTX+1].appendChild(tear)
+                        axeTX++
+                        countt++
+                    }
+                    else{
+                        block[axeTY].children[axeTX].lastChild.remove()
+                        axeTX++
+                        block[axeTY].children[axeTX].appendChild(tear)
+                        countt++   
+                    }
+                     
+                }
+            }
+            else{
+                block[axeTY].children[axeTX].firstChild.remove()
+                clearInterval(interval)
+            }
+        },1000)
+    }
+}
