@@ -16,8 +16,6 @@ countcle.textContent=cle
 let countb=document.querySelector('#bombe')
 countc.textContent=coeur
 countb.textContent=bombes
-let tear = document.createElement('img')
-tear.src='img/tear.png'
 perso.src='img/perso1.png'
 perso.alt='perso1'
 perso.className='perso1'
@@ -124,6 +122,9 @@ btn.addEventListener('click',()=>{
     location.reload()
 })
 function Tire(direction) {
+    let tear = document.createElement('img')
+    tear.src='img/tear.png'
+    tear.className='tear'
     let range=2
     let countt=0
     let axeTX=axeX
@@ -135,13 +136,11 @@ function Tire(direction) {
                     if(countt==0){
                         block[axeTY+1].children[axeTX].appendChild(tear)
                         axeTY++
-                        countt++
                     }
                     else{
                         block[axeTY].children[axeTX].lastChild.remove()
                         axeTY++
                         block[axeTY].children[axeTX].appendChild(tear)
-                        countt++   
                     }
                      
                 }
@@ -150,45 +149,45 @@ function Tire(direction) {
                 block[axeTY].children[axeTX].firstChild.remove()
                 clearInterval(interval)
             }
+            countt++
         },1000)
     }
     if(direction=='up'){
         const interval = setInterval(function (){
             if(countt<range){
+                tear.style.transform='rotate(0.5turn)'
                 if(axeTY>0&&block[axeTY-1].children[axeTX].firstChild==null&&block[axeTY-1].children[axeTX].classList.contains('vide')&&perdu==false){
                     if(countt==0){
                         block[axeTY-1].children[axeTX].appendChild(tear)
                         axeTY--
-                        countt++
                     }
                     else{
                         block[axeTY].children[axeTX].lastChild.remove()
                         axeTY--
-                        block[axeTY].children[axeTX].appendChild(tear)
-                        countt++   
+                        block[axeTY].children[axeTX].appendChild(tear)   
                     }
                 }
             }
             else{
-                block[axeTY].children[axeTX].firstChild.remove()
+                    block[axeTY].children[axeTX].firstChild.remove()
                 clearInterval(interval)
             }
+            countt++
         },1000)
     }
     if(direction=='left'){
         const interval = setInterval(function (){
             if(countt<range){
+                tear.style.transform='rotate(0.25turn)'
                 if(axeTX>0&&block[axeTY].children[axeTX-1].firstChild==null&&block[axeTY].children[axeTX-1].classList.contains('vide')&&perdu==false){
                     if(countt==0){
                         block[axeTY].children[axeTX-1].appendChild(tear)
                         axeTX--
-                        countt++
                     }
                     else{
                         block[axeTY].children[axeTX].lastChild.remove()
                         axeTX--
-                        block[axeTY].children[axeTX].appendChild(tear)
-                        countt++   
+                        block[axeTY].children[axeTX].appendChild(tear)   
                     }
                      
                 }
@@ -197,22 +196,22 @@ function Tire(direction) {
                 block[axeTY].children[axeTX].firstChild.remove()
                 clearInterval(interval)
             }
+            countt++
         },1000)
     }
     if(direction=='rigth'){
         const interval = setInterval(function (){
             if(countt<range){
+                tear.style.transform='rotate(0.75turn)'
                 if(axeTX>0&&block[axeTY].children[axeTX+1].firstChild==null&&block[axeTY].children[axeTX+1].classList.contains('vide')&&perdu==false){
                     if(countt==0){
                         block[axeTY].children[axeTX+1].appendChild(tear)
                         axeTX++
-                        countt++
                     }
                     else{
                         block[axeTY].children[axeTX].lastChild.remove()
                         axeTX++
-                        block[axeTY].children[axeTX].appendChild(tear)
-                        countt++   
+                        block[axeTY].children[axeTX].appendChild(tear)   
                     }
                      
                 }
@@ -221,6 +220,7 @@ function Tire(direction) {
                 block[axeTY].children[axeTX].firstChild.remove()
                 clearInterval(interval)
             }
+            countt++
         },1000)
     }
 }
